@@ -12,3 +12,89 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  cuid             String             @id @default(cuid())
+  username         String             @unique
+  name             String
+  bio              String?            @db.Text
+  profile          String?
+  cover            String?
+  reference        String             @unique
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @updatedAt
+  posts            Post[]
+  PostLike         PostLike[]
+  PostShare        PostShare[]
+  PostComment      PostComment[]
+  PostCommentReply PostCommentReply[]
+
+  @@map("users")
+}
+
+model Post {
+  cuid       String   @id @default(cuid())
+  images     String[]
+  location   String
+  content    String   @db.Text
+  tags       String[] @default([])
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user_id    String
+
+  user        User          @relation(fields: [user_id], references: [cuid], onDelete: Cascade)
+  PostLike    PostLike[]
+  PostShare   PostShare[]
+  PostComment PostComment[]
+
+  @@map("posts")
+}
+
+model PostLike {
+  cuid       String   @id @default(cuid())
+  created_at DateTime @default(now())
+  user_id    String
+  post_id    String
+
+  user User @relation(fields: [user_id], references: [cuid], onDelete: Cascade)
+  post Post @relation(fields: [post_id], references: [cuid], onDelete: Cascade)
+
+  @@map("post_likes")
+}
+
+model PostShare {
+  cuid       String   @id @default(cuid())
+  created_at DateTime @default(now())
+  user_id    String
+  post_id    String
+
+  user User @relation(fields: [user_id], references: [cuid], onDelete: Cascade)
+  post Post @relation(fields: [post_id], references: [cuid], onDelete: Cascade)
+
+  @@map("post_shares")
+}
+
+model PostComment {
+  cuid    String @id @default(cuid())
+  content String @db.Text
+  user_id String
+  post_id String
+
+  user             User               @relation(fields: [user_id], references: [cuid], onDelete: Cascade)
+  post             Post               @relation(fields: [post_id], references: [cuid], onDelete: Cascade)
+  PostCommentReply PostCommentReply[]
+
+  @@map("post_comments")
+}
+
+model PostCommentReply {
+  cuid       String @id @default(cuid())
+  content    String @db.Text
+  user_id    String
+  comment_id String
+
+  user    User        @relation(fields: [user_id], references: [cuid], onDelete: Cascade)
+  comment PostComment @relation(fields: [comment_id], references: [cuid], onDelete: Cascade)
+
+  @@map("post_comment_replies")
+}
