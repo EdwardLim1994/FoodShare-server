@@ -1,7 +1,19 @@
 import { Elysia } from "elysia";
+import { forEach } from "lodash";
+import userController from "./users/controller";
+import authController from "./auth/controller";
 
-export const app = new Elysia().get("/", () => "Hello Elysia").listen(3000);
+let setup = new Elysia();
 
-console.log(
-	`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
-);
+const controllers = {
+	"/user": userController,
+	"/user/auth": authController,
+};
+
+forEach(controllers, (controller, index) => {
+	setup = controller(setup, index);
+});
+
+const app = setup;
+
+export default app;
