@@ -1,9 +1,5 @@
-import PrismaClient from "../database/PrismaClient";
-import SupabaseClient from "../database/SupabaseClient";
+import PrismaClient from "../client/PrismaClient";
 
 export default abstract class Service {
-	constructor(
-		protected prisma: PrismaClient = PrismaClient.instance(),
-		protected supabase: SupabaseClient = SupabaseClient.instance()
-	) {}
+	constructor(protected prisma: PrismaClient = PrismaClient.instance()) {}
 }

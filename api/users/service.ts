@@ -1,8 +1,11 @@
 import { User } from "@prisma/client";
 import Service from "../shared/utils/Service";
+import SupabaseClient from "../shared/client/SupabaseClient";
 
 export default class UserService extends Service {
-	constructor() {
+	constructor(
+		protected supabase: SupabaseClient = SupabaseClient.instance()
+	) {
 		super();
 	}
 
