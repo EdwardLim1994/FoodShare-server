@@ -1,7 +1,10 @@
-import { createClient } from "@supabase/supabase-js";
+import {
+	createClient,
+	type SupabaseClient as SCOG,
+} from "@supabase/supabase-js";
 
 export default class SupabaseClient {
-	private static client: SupabaseClient;
+	private static client: SCOG;
 
 	private constructor() {}
 
