@@ -5,20 +5,18 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["multiSchema", "clientExtensions"]
-  binaryTargets   = ["native"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
-  schemas   = ["auth", "public"]
 }
 
 model User {
   cuid             String             @id @default(cuid())
+  email            String
   username         String             @unique
   name             String
   bio              String?            @db.Text
@@ -34,7 +32,6 @@ model User {
   PostCommentReply PostCommentReply[]
 
   @@map("users")
-  @@schema("auth")
 }
 
 model Post {
@@ -53,7 +50,6 @@ model Post {
   PostComment PostComment[]
 
   @@map("posts")
-  @@schema("auth")
 }
 
 model PostLike {
@@ -66,7 +62,6 @@ model PostLike {
   post Post @relation(fields: [post_id], references: [cuid], onDelete: Cascade)
 
   @@map("post_likes")
-  @@schema("auth")
 }
 
 model PostShare {
@@ -79,7 +74,6 @@ model PostShare {
   post Post @relation(fields: [post_id], references: [cuid], onDelete: Cascade)
 
   @@map("post_shares")
-  @@schema("auth")
 }
 
 model PostComment {
@@ -93,7 +87,6 @@ model PostComment {
   PostCommentReply PostCommentReply[]
 
   @@map("post_comments")
-  @@schema("auth")
 }
 
 model PostCommentReply {
@@ -106,5 +99,4 @@ model PostCommentReply {
   comment PostComment @relation(fields: [comment_id], references: [cuid], onDelete: Cascade)
 
   @@map("post_comment_replies")
-  @@schema("auth")
 }
