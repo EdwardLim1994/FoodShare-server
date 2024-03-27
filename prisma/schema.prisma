@@ -37,9 +37,8 @@ model User {
 model Post {
   cuid       String   @id @default(cuid())
   images     String[]
-  location   String
+  location   String?
   content    String   @db.Text
-  tags       String[] @default([])
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   user_id    String
