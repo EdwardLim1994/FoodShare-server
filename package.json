@@ -1,19 +1,20 @@
 {
-	"scripts": {
-		"dev": "bun --watch api/index.ts",
-		"build": "bun build  api/index.ts",
-		"start": "NODE_ENV=production bun api/index.ts",
-		"test": "bun test"
-	},
-	"dependencies": {
-		"@prisma/client": "^5.11.0",
-		"@supabase/supabase-js": "^2.39.8",
-		"elysia": "^1.0.9",
-		"prisma": "^5.11.0"
-	},
-	"devDependencies": {
-		"@types/bun": "latest",
-		"@types/lodash": "^4.17.0",
-		"lodash": "^4.17.21"
-	}
+  "scripts": {
+    "dev": "bun --watch api/index.ts",
+    "build": "bun build  api/index.ts",
+    "start": "NODE_ENV=production bun api/index.ts",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.11.0",
+    "@supabase/supabase-js": "^2.39.8",
+    "cloudinary": "^2.0.3",
+    "elysia": "^1.0.9",
+    "prisma": "^5.11.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/lodash": "^4.17.0",
+    "lodash": "^4.17.21"
+  }
 }
