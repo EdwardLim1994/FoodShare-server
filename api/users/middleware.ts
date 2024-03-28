@@ -1,5 +1,5 @@
 import { isEmpty } from "lodash";
-import UserService from "../users/service";
+import UserService from "./service";
 import { decryptToken } from "../shared/helper";
 
 const userService = new UserService();
