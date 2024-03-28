@@ -1,14 +1,28 @@
 import { Post } from "@prisma/client";
 import Service from "../shared/utils/Service";
+import { uploadImage } from "../shared/helper";
 
 export default class PostService extends Service {
 	constructor() {
 		super();
 	}
 
-	async createPosts(data: Post) {
+	async createPosts(
+		images: File[],
+		content: string,
+		userId: string,
+		location?: string
+	) {
+		//TODO: upload file
+		const result = await uploadImage(images);
+
 		return await this.prisma.post.create({
-			data,
+			data: {
+				images: result,
+				content,
+				userId,
+				location,
+			},
 		});
 	}
 
